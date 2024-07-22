@@ -23,7 +23,7 @@ module Polygonio
         attribute :success, Types::Bool
         attribute :ticker, Types::String
         attribute :map, Types::Hash
-        attribute :results, Types::Array do
+        attribute :results, Types::Array.default([].freeze) do
           attribute? :T, Types::String # Not receiving for some reason
           attribute :t, Types::Integer
           attribute :y, Types::Integer
@@ -32,7 +32,7 @@ module Polygonio
           attribute :i, Types::String
           attribute :x, Types::Integer
           attribute :s, Types::Integer
-          attribute :c, Types::Array.of(Types::Integer)
+          attribute :c, Types::Array.of(Types::Integer).default([].freeze)
           attribute :p, Types::JSON::Decimal
           attribute :z, Types::Integer
         end
@@ -60,20 +60,20 @@ module Polygonio
         attribute :success, Types::Bool
         attribute :ticker, Types::String
         attribute :map, Types::Hash
-        attribute :results, Types::Array do
+        attribute :results, Types::Array.default([].freeze) do
           attribute? :T, Types::String # Not receiving for some reason
           attribute :t, Types::Integer
           attribute :y, Types::Integer
           attribute? :f, Types::Integer
           attribute :q, Types::Integer
-          attribute? :i, Types::Array.of(Types::Integer)
+          attribute? :i, Types::Array.of(Types::Integer).default([].freeze)
           attribute :p, Types::JSON::Decimal
           attribute :x, Types::Integer
           attribute :s, Types::Integer
           attribute? :P, Types::JSON::Decimal
           attribute? :X, Types::Integer
           attribute? :S, Types::Integer
-          attribute :c, Types::Array.of(Types::Integer)
+          attribute :c, Types::Array.of(Types::Integer).default([].freeze)
           attribute :z, Types::Integer
         end
       end
@@ -204,7 +204,7 @@ module Polygonio
 
       class FullSnapshotResponse < PolygonResponse
         attribute :status, Types::String
-        attribute :tickers, Types::Array.of(SnapshotTicker)
+        attribute :tickers, Types::Array.of(SnapshotTicker).default([].freeze)
       end
 
       def full_snapshot
@@ -226,7 +226,7 @@ module Polygonio
 
       class SnapshotGainersLosersResponse < PolygonResponse
         attribute :status, Types::String
-        attribute :tickers, Types::Array.of(SnapshotTicker)
+        attribute :tickers, Types::Array.of(SnapshotTicker).default([].freeze)
       end
 
       def snapshot_gainers_losers(direction)
@@ -242,7 +242,7 @@ module Polygonio
         attribute :adjusted, Types::Bool
         attribute :query_count, Types::Integer
         attribute :results_count, Types::Integer
-        attribute :results, Types::Array do
+        attribute :results, Types::Array.default([].freeze) do
           attribute :T, Types::String
           attribute :v, Types::JSON::Decimal
           attribute :vw, Types::JSON::Decimal
@@ -269,7 +269,7 @@ module Polygonio
         attribute :adjusted, Types::Bool
         attribute :query_count, Types::Integer
         attribute :results_count, Types::Integer
-        attribute :results, Types::Array do
+        attribute :results, Types::Array.default([].freeze) do
           attribute? :T, Types::String # Not appearing
           attribute :v, Types::JSON::Decimal
           attribute? :vw, Types::JSON::Decimal
@@ -290,7 +290,8 @@ module Polygonio
         to = Types::JSON::Date[to]
         unadjusted = Types::Bool[unadjusted]
 
-        res = client.request.get("/v2/aggs/ticker/#{ticker}/range/#{multiplier}/#{timespan}/#{from}/#{to}", { unadjusted: unadjusted })
+        res = client.request.get("/v2/aggs/ticker/#{ticker}/range/#{multiplier}/#{timespan}/#{from}/#{to}",
+                                 { unadjusted: unadjusted })
         AggregatesResponse[res.body]
       end
 
@@ -300,7 +301,7 @@ module Polygonio
         attribute :adjusted, Types::Bool
         attribute :query_count, Types::Integer
         attribute :results_count, Types::Integer
-        attribute :results, Types::Array do
+        attribute :results, Types::Array.default([].freeze) do
           attribute :T, Types::String # Not appearing
           attribute :v, Types::JSON::Decimal
           attribute? :vw, Types::JSON::Decimal
@@ -319,7 +320,8 @@ module Polygonio
         date = Types::JSON::Date[date]
         unadjusted = Types::Bool[unadjusted]
 
-        res = client.request.get("/v2/aggs/grouped/locale/#{locale}/market/#{market.upcase}/#{date}", { unadjusted: unadjusted })
+        res = client.request.get("/v2/aggs/grouped/locale/#{locale}/market/#{market.upcase}/#{date}",
+                                 { unadjusted: unadjusted })
         GroupedDailyResponse[res.body]
       end
     end

@@ -6,7 +6,7 @@ module Polygonio
       class Markets < PolygonRestHandler
         class MarketsResponse < PolygonResponse
           attribute :status, Types::String
-          attribute :results, Types::Array do
+          attribute :results, Types::Array.default([].freeze) do
             attribute :market, Types::String
             attribute :desc, Types::String
           end

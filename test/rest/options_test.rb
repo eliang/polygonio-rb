@@ -16,17 +16,25 @@ class OptionsTest < Minitest::Test
 
   def test_daily_open_close
     VCR.use_cassette("options_daily_open_close") do
-      ticker = 'SPY251219C00650000'
-      res = @client.options.daily_open_close(ticker, '2024-07-15')
-      assert_equal ticker, res.symbol.gsub('O:', '')
+      ticker = "SPY251219C00650000"
+      res = @client.options.daily_open_close(ticker, "2024-07-15")
+      assert_equal ticker, res.symbol.gsub("O:", "")
     end
   end
 
   def test_aggregates
     VCR.use_cassette("options_aggregates") do
-      ticker = 'SPY251219C00650000'
+      ticker = "SPY251219C00650000"
       res = @client.options.aggregates(ticker, 1, :day, "2024-07-01", "2024-07-05")
       assert_equal 2, res.results_count
+    end
+  end
+
+  def test_aggregates_no_data
+    VCR.use_cassette("options_aggregates_no_data") do
+      ticker = "SPY251219C00650000"
+      res = @client.options.aggregates(ticker, 1, :day, "2024-07-20", "2024-07-21")
+      assert_equal 0, res.results.length
     end
   end
 end

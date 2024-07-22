@@ -7,7 +7,7 @@ module Polygonio
         class StockSplitsResponse < PolygonResponse
           attribute :status, Types::String
           attribute :count, Types::Integer
-          attribute :results, Types::Array do
+          attribute :results, Types::Array.default([].freeze) do
             attribute :ticker, Types::String
             attribute :ex_date, Types::JSON::Date
             attribute :payment_date, Types::JSON::Date
@@ -27,7 +27,7 @@ module Polygonio
         class StockDividendsResponse < PolygonResponse
           attribute :status, Types::String
           attribute :count, Types::Integer
-          attribute :results, Types::Array do
+          attribute :results, Types::Array.default([].freeze) do
             attribute :ticker, Types::String
             attribute? :type, Types::String
             attribute :ex_date, Types::String
@@ -49,7 +49,7 @@ module Polygonio
           attribute :status, Types::String
           attribute? :count, Types::Integer
           # I'm lazy and didn't want to copy every field here. Please submit PR if you want to crack at it!
-          attribute :results, Types::Array.of(Types::Hash)
+          attribute :results, Types::Array.of(Types::Hash).default([].freeze)
         end
 
         class StockFinancialsParameters < Dry::Struct

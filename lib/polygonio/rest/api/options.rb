@@ -43,7 +43,7 @@ module Polygonio
 
         res = client.request.get("/v1/open-close/O:#{symbol}/#{date}")
         DailyOpenCloseResponse[res.body]
-        end
+      end
 
       class AggregatesResponse < PolygonResponse
         attribute :ticker, Types::String
@@ -51,7 +51,7 @@ module Polygonio
         attribute :adjusted, Types::Bool
         attribute :query_count, Types::Integer
         attribute :results_count, Types::Integer
-        attribute :results, Types::Array do
+        attribute :results, Types::Array.default([].freeze) do
           attribute? :T, Types::String # Not appearing
           attribute :v, Types::JSON::Decimal
           attribute? :vw, Types::JSON::Decimal
@@ -72,7 +72,8 @@ module Polygonio
         to = Types::JSON::Date[to]
         unadjusted = Types::Bool[unadjusted]
 
-        res = client.request.get("/v2/aggs/ticker/O:#{ticker}/range/#{multiplier}/#{timespan}/#{from}/#{to}", { unadjusted: unadjusted })
+        res = client.request.get("/v2/aggs/ticker/O:#{ticker}/range/#{multiplier}/#{timespan}/#{from}/#{to}",
+                                 { unadjusted: unadjusted })
         AggregatesResponse[res.body]
       end
     end

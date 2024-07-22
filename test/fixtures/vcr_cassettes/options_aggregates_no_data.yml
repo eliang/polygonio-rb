@@ -1,0 +1,39 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.polygon.io/v2/aggs/ticker/O:SPY251219C00650000/range/1/day/2024-07-20/2024-07-21?apiKey=<API_KEY>&unadjusted=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.10.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - nginx/1.19.2
+      date:
+      - Mon, 22 Jul 2024 20:49:29 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '145'
+      connection:
+      - keep-alive
+      content-encoding:
+      - gzip
+      vary:
+      - Accept-Encoding
+      x-request-id:
+      - 0f587298bd64aa926d2c7f2f3a77ea39
+      strict-transport-security:
+      - max-age=15724800; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ticker":"O:SPY251219C00650000","queryCount":0,"resultsCount":0,"adjusted":true,"status":"OK","request_id":"0f587298bd64aa926d2c7f2f3a77ea39"}'
+  recorded_at: Mon, 22 Jul 2024 20:49:29 GMT
+recorded_with: VCR 6.2.0
