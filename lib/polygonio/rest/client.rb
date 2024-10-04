@@ -17,9 +17,10 @@ module Polygonio
 
       RETRY_OPTIONS = {
         max: 2,
-        interval: 0.05,
+        interval: 0.15,
         interval_randomness: 0.5,
         backoff_factor: 2,
+        retry_statuses: [429],
         exceptions: [Faraday::ConnectionFailed].concat(Faraday::Retry::Middleware::DEFAULT_EXCEPTIONS)
       }.freeze
 
