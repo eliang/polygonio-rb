@@ -30,6 +30,9 @@ module Polygonio
           @request_builder&.call(builder)
           builder.request :json
           builder.response :json
+          builder.response :logger, nil, { headers: false, bodies: false, log_level: :debug } do |logger|
+            logger.filter(/(apiKey=)([^&]+)/, '\1[REMOVED]')
+          end
           builder.adapter Faraday.default_adapter
         end
       end
