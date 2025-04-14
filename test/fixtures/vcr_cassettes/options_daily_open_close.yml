@@ -1,0 +1,39 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.polygon.io/v1/open-close/O:SPY251219C00650000/2024-07-15?apiKey=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.10.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - nginx/1.19.2
+      date:
+      - Tue, 16 Jul 2024 18:52:45 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '157'
+      connection:
+      - keep-alive
+      content-encoding:
+      - gzip
+      vary:
+      - Accept-Encoding
+      x-request-id:
+      - 8f497c18d335274108281c1f88ce5e4f
+      strict-transport-security:
+      - max-age=15724800; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: '{"status":"OK","from":"2024-07-15","symbol":"O:SPY251219C00650000","open":16.15,"high":16.64,"low":15.61,"close":15.61,"volume":7,"afterHours":15.61,"preMarket":16.15}'
+  recorded_at: Tue, 16 Jul 2024 18:52:45 GMT
+recorded_with: VCR 6.2.0

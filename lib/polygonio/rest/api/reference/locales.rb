@@ -6,7 +6,7 @@ module Polygonio
       class Locales < PolygonRestHandler
         class LocalesResponse < PolygonResponse
           attribute :status, Types::String
-          attribute :results, Types::Array do
+          attribute :results, Types::Array.default([].freeze) do
             attribute :locale, Types::String
             attribute :name, Types::String
           end

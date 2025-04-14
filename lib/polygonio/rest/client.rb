@@ -17,9 +17,10 @@ module Polygonio
 
       RETRY_OPTIONS = {
         max: 2,
-        interval: 0.05,
+        interval: 0.15,
         interval_randomness: 0.5,
         backoff_factor: 2,
+        retry_statuses: [429],
         exceptions: [Faraday::ConnectionFailed].concat(Faraday::Retry::Middleware::DEFAULT_EXCEPTIONS)
       }.freeze
 
@@ -30,6 +31,9 @@ module Polygonio
           @request_builder&.call(builder)
           builder.request :json
           builder.response :json
+          builder.response :logger, nil, { headers: false, bodies: false, log_level: :debug } do |logger|
+            logger.filter(/(apiKey=)([^&]+)/, '\1[REMOVED]')
+          end
           builder.adapter Faraday.default_adapter
         end
       end
@@ -53,6 +57,10 @@ module Polygonio
 
       def crypto
         Rest::Crypto.new(self)
+      end
+
+      def options
+        Rest::Options.new(self)
       end
     end
 

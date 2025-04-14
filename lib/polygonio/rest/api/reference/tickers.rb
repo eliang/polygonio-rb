@@ -29,7 +29,7 @@ module Polygonio
           attribute :per_page, Types::Integer
           attribute :count, Types::Integer
           attribute :status, Types::String
-          attribute :tickers, Types::Array.of(Ticker)
+          attribute :tickers, Types::Array.of(Ticker).default([].freeze)
         end
 
         class TickersParameters < Dry::Struct
@@ -83,8 +83,8 @@ module Polygonio
           attribute? :ceo, Types::String
           attribute? :url, Types::String
           attribute? :description, Types::String
-          attribute? :similar, Types::Array
-          attribute? :tags, Types::Array
+          attribute? :similar, Types::Array.default([].freeze)
+          attribute? :tags, Types::Array.default([].freeze)
           attribute? :hq_address, Types::String
           attribute? :hq_state, Types::String
           attribute? :hq_country, Types::String
@@ -99,14 +99,14 @@ module Polygonio
         end
 
         class NewsResponse < PolygonResponse
-          attribute :symbols, Types::Array.of(Types::String)
+          attribute :symbols, Types::Array.of(Types::String).default([].freeze)
           attribute :title, Types::String
           attribute :url, Types::String
           attribute :source, Types::String
           attribute :summary, Types::String
           attribute? :image, Types::String
           attribute :timestamp, Types::JSON::DateTime
-          attribute :keywords, Types::Array.of(Types::String)
+          attribute :keywords, Types::Array.of(Types::String).default([].freeze)
         end
 
         def news(symbol, page = 1, perpage = 50)
